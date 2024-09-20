@@ -6,13 +6,23 @@ export default function TodoList() {
 
     const [newTodo, setNewTodo] = useState("");
 
+    const [editingIndex, setEditingIndex] = useState([]);
+
+    //タスク追加
     const addTodo = () => {
         setTodos([...todos, newTodo]);
         setNewTodo("");
     };
 
+    //タスク削除
     const deleteTodo = (indexToDelete: number) => {
-        setTodos(todos.filter((_, index) => index !== indexToDelete));
+        setTodos(todos.filter((_, i) => i !== indexToDelete));
+    };
+
+    //タスク編集
+    const editTodo = (index: number) => {
+        setNewTodo(todos[index]); //編集対象のタスクを入力フィールドに設定
+        // setEditingIndex(index); //編集モードに入る
     };
 
     return (
@@ -35,6 +45,9 @@ export default function TodoList() {
                             todo={todo}
                             onDelete={() => {
                                 deleteTodo(index);
+                            }}
+                            onEdit={() => {
+                                editTodo(index);
                             }}
                         />
                     </div>
